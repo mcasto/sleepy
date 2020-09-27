@@ -10,6 +10,8 @@
     "push-major": "npm version major && git push"
   },
   "dependencies": {
+    "eslint": "^7.10.0",
+    "osx-brightness": "^4.0.0",
     "osx-volume": "0.0.1"
   }
 }
