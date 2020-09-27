@@ -3,8 +3,7 @@
 I use a Mac (running Catalina). When my wife and I are in a hotel room, 
 I inevitably have my computer set up on the desk in the room and am working on something when she goes to bed.
 
-She's hypersensitive to light in the room when she's going to sleep. I wrote this tiny command-line app so I can easily
-dim my screen's brightness and mute the volume (so I don't accidentally start a sound that will wake her).
+She's hypersensitive to light in the room when she's going to sleep. If I manually reduce the brightness, I have to remember to turn it back up in the morning, but if I'm still groggy from waking, I often forget. To make this process easier, I wrote this little command-line app that dims my screen (and mutes my volume) for a pre-set time.
 
 # Installation
 `npm -i g mcasto/sleepy`
@@ -20,10 +19,15 @@ or
 
 `$ sleepy [--hours #] [--brightness #]`
 
-# Command-line Arguments
-`brightness` expects an integer between 1 and 10 (inclusive) and will be set to a percentage of its brightest setting based on that integer: (10%, 20%, 30%, ...)
+# Command-Line Arguments
+```
+Usage: bin/index -h [num] -b [int 1-10]
 
-`hours` can use decimals like 6.5 (6 hours and 30 minutes) or, if you want less than an hour, use something like 0.5 for 30 minutes.
+Options:
+  -h, --hours       Hours to dim screen                             [default: 8]
+  -b, --brightness  Set brightness level (% of full brightness)     [default: 5]
+  --help            Show help                                          [boolean]
+```
 
 # Examples
 `$ sleepy -h 2 -b 5` will set brightness to 50% for 2 hours
