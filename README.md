@@ -21,7 +21,7 @@ or
 `$ sleepy [--hours #] [--brightness #]`
 
 # Command-line Arguments
-`brightness` expects an integer between 0 and 10 (inclusive) and will be set to a percentage of its brightest setting based on that integer: (0%, 10%, 20%, ...)
+`brightness` expects an integer between 1 and 10 (inclusive) and will be set to a percentage of its brightest setting based on that integer: (10%, 20%, 30%, ...)
 
 `hours` can use decimals like 6.5 (6 hours and 30 minutes) or, if you want less than an hour, use something like 0.5 for 30 minutes.
 
