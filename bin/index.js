@@ -20,4 +20,5 @@ brightness.set(level);
 setTimeout(() => {
   volume.unmute();
   brightness.set(1);
+  process.exit(0);
 }, hours * 1000 * 60 * 60);
