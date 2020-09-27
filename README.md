@@ -28,7 +28,7 @@ or
 # Examples
 `$ sleepy -h 2 -b 5` will set brightness to 50% for 2 hours
 
-`$ sleepy -h 0.01 -b 0` will set brightness to 0% for 3.6 seconds (a useful test)
+`$ sleepy -h 0.001 -b 0` will set brightness to 0% for 3.6 seconds (a useful test)
 
 # Notes
 When it exits, brightness gets set to 100% and volume gets unmuted. This is true whether the script reaches its requested exit time or you use `CTRL-C` to force exit (or send SIGINT to the process).
