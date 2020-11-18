@@ -1,4 +1,6 @@
 #!/usr/local/bin/node
+const { exec } = require("child_process");
+
 process.stdin.resume();
 
 const startTime = new Date();
@@ -14,9 +16,12 @@ const getDuration = () => {
 };
 
 const gracefulExit = () => {
+  volume.unmute();
+  brightness.set(1);
   console.clear();
   console.log(`\nStarted at ${startTime.toLocaleTimeString()}`);
   console.log(`${getDuration()}\n`);
+  exec("do-not-disturb off");
   process.exit(0);
 };
 
@@ -36,8 +41,6 @@ const argv = require("yargs")
   .help("help").argv;
 
 process.on("SIGINT", (code) => {
-  volume.unmute();
-  brightness.set(1);
   gracefulExit();
 });
 
@@ -46,14 +49,12 @@ const level = 0.1 * (argv.b || argv.brightness || argv.bright || 5);
 
 volume.mute();
 brightness.set(level);
+exec("do-not-disturb on");
 
 const timeLog = setInterval(() => {
   process.stdout.write(`${getDuration()}\r`);
 }, 1000);
 
 setTimeout(() => {
-  volume.unmute();
-  brightness.set(1);
-
   gracefulExit();
 }, hours * 1000 * 60 * 60);
