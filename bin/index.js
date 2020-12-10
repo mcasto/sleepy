@@ -28,26 +28,39 @@ const gracefulExit = () => {
 const { intervalToDuration } = require("date-fns");
 const brightness = require("osx-brightness");
 const volume = require("osx-volume");
+const { join } = require("path");
 const argv = require("yargs")
   .alias("h", "hours")
   .describe("h", "Hours to dim screen")
-  .default("h", 8)
+  .default("h", 15)
   .alias("b", "brightness")
   .describe("b", "Set brightness level (% of full brightness)")
-  .default("b", 5)
+  .default("b", 1)
+  .alias("p", "pink")
+  .describe("p", "Open Pink Noise Player")
+  .default("p", "true")
   .usage("Usage: $0 -h [num] -b [int 1-10]")
-  .default("h", 8)
-  .default("b", 5)
   .help("help").argv;
 
 process.on("SIGINT", (code) => {
   gracefulExit();
 });
 
-const hours = argv.h || argv.hours || 8;
-const level = 0.1 * (argv.b || argv.brightness || argv.bright || 5);
+const hours = argv.h || argv.hours || 15;
+const level = 0.1 * (argv.b || argv.brightness || argv.bright || 1);
+const pink = argv.p !== "false" || argv.pink !== "false";
 
-volume.mute();
+let pinkInterval;
+
+if (!pink) {
+  volume.mute();
+} else {
+  exec(`afplay ${join(__dirname, "pink-noise.wav")}`);
+  pinkInterval = setInterval(() => {
+    exec(`afplay ${join(__dirname, "pink-noise.wav")}`);
+  }, 9999);
+}
+
 brightness.set(level);
 exec("do-not-disturb on");
 
