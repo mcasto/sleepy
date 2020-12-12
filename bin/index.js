@@ -1,6 +1,10 @@
 #!/usr/local/bin/node
 const { exec } = require("child_process");
 
+const volume = require("osx-volume");
+let curVol;
+volume.get((v) => (curVol = v));
+
 process.stdin.resume();
 
 const startTime = new Date();
@@ -17,6 +21,7 @@ const getDuration = () => {
 
 const gracefulExit = () => {
   volume.unmute();
+  volume.set(curVol);
   brightness.set(1);
   console.clear();
   console.log(`\nStarted at ${startTime.toLocaleTimeString()}`);
@@ -27,7 +32,6 @@ const gracefulExit = () => {
 
 const { intervalToDuration } = require("date-fns");
 const brightness = require("osx-brightness");
-const volume = require("osx-volume");
 const { join } = require("path");
 const argv = require("yargs")
   .alias("h", "hours")
@@ -37,7 +41,7 @@ const argv = require("yargs")
   .describe("b", "Set brightness level (% of full brightness)")
   .default("b", 1)
   .alias("p", "pink")
-  .describe("p", "Open Pink Noise Player")
+  .describe("p", "Play Pink Noise")
   .default("p", "true")
   .usage("Usage: $0 -h [num] -b [int 1-10]")
   .help("help").argv;
@@ -57,6 +61,7 @@ if (!pink) {
 } else {
   exec(`afplay ${join(__dirname, "pink-noise.wav")}`);
   pinkInterval = setInterval(() => {
+    volume.set(70);
     exec(`afplay ${join(__dirname, "pink-noise.wav")}`);
   }, 9999);
 }
