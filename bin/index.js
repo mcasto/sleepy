@@ -59,9 +59,9 @@ let pinkInterval;
 if (!pink) {
   volume.mute();
 } else {
+  volume.set(70);
   exec(`afplay ${join(__dirname, "pink-noise.wav")}`);
   pinkInterval = setInterval(() => {
-    volume.set(70);
     exec(`afplay ${join(__dirname, "pink-noise.wav")}`);
   }, 9999);
 }
